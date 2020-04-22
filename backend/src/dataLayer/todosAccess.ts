@@ -70,6 +70,20 @@ export class TodosAccess {
       })
       .promise();
   }
+
+  async updateAttachmentUrl(todoId: string, userId: string, attachmentUrl: string) {
+    return await this.docClient
+      .update({
+        TableName: this.todosTable,
+        Key: { userId, todoId },
+        UpdateExpression: "set attachmentUrl=:attachmentUrl",
+        ExpressionAttributeValues: {
+          ":attachmentUrl": attachmentUrl
+        },
+        ReturnValues: "UPDATED_NEW"
+      })
+      .promise();
+  }
 }
 
 function createDynamoDBClient() {

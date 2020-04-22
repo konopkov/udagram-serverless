@@ -51,11 +51,24 @@ export async function updateTodo(
 
   const userId = parseUserId(jwtToken)
 
-  const updatedTodo: unknown = todoAccess.updateTodo(userId, todoId,{
+  const updatedTodo: unknown = await todoAccess.updateTodo(userId, todoId,{
     name: updateTodoRequest.name,
     dueDate: updateTodoRequest.dueDate,
     done: updateTodoRequest.done
   })
+
+  return updatedTodo as TodoUpdate
+}
+
+export async function updateAttachmentUrl(
+  todoId: string,
+  attachmentUrl: string,
+  jwtToken: string
+): Promise<TodoUpdate> {
+
+  const userId = parseUserId(jwtToken)
+
+  const updatedTodo: unknown = await todoAccess.updateAttachmentUrl(todoId, userId, attachmentUrl)
 
   return updatedTodo as TodoUpdate
 }
